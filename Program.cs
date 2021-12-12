@@ -1,4 +1,6 @@
 ﻿using AdventOfCode._02Dive;
+using AdventOfCode._03BinaryDiagnostic;
+using System;
 
 namespace AdventOfCode
 {
@@ -6,11 +8,17 @@ namespace AdventOfCode
 	{
 		static void Main(string[] args)
 		{
-			string input = "";
+			var input = "";
 
-			ICodePuzzle level = new Dive();
+			ICodePuzzle level = new BinaryDiagnostic();
 
-			var solution = level.Evaluate(input);
+            var solution1 = level.EvaluatePartOne(input);
+
+            Console.WriteLine(solution1);
+
+            var solution2 = level.EvaluatePartTwo(input);
+
+			Console.WriteLine(solution2);
 		}
 	}
 }
