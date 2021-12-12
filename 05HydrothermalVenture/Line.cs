@@ -12,6 +12,7 @@ namespace AdventOfCode._05HydrothermalVenture
         public Point To { get; }
 
         public bool IsNonDiagonally => IsHorizontal || IsVertical;
+        private bool IsDiagonally => !IsNonDiagonally;
         private bool IsHorizontal => From.Y == To.Y;
         private bool IsVertical => From.X == To.X;
 
@@ -31,30 +32,45 @@ namespace AdventOfCode._05HydrothermalVenture
 
         public IEnumerable<Point> GetAllCoveredPoints()
         {
-            if(IsHorizontal) // To and From have the same Y Value
+            if (IsHorizontal) // To and From have the same Y Value
             {
-                var pointWithGreaterX = From.X >= To.X ? From : To;
-                var pointWithSmallerX = From.X >= To.X ? To : From;
+                var differenceX = To.X - From.X;
 
-                var difference = pointWithGreaterX.X - pointWithSmallerX.X;
+                var signFactor = differenceX < 0 ? -1 : 1;
 
-                while(difference >= 0)
+                var maxIterations = Math.Abs(differenceX) + 1;
+
+                for (int i = 0; i < maxIterations; i++)
                 {
-                    yield return new Point(pointWithGreaterX.X - difference, From.Y);
-                    difference--;
+                    yield return new Point(From.X + i * signFactor, From.Y);
                 }
             }
             else if(IsVertical) // To and From have the same X Value
             {
-                var pointWithGreaterY = From.Y >= To.Y ? From : To;
-                var pointWithSmallerY = From.Y >= To.Y ? To : From;
+                var differenceY = To.Y - From.Y;
 
-                var difference = pointWithGreaterY.Y - pointWithSmallerY.Y;
+                var signFactor = differenceY < 0 ? -1 : 1;
 
-                while (difference >= 0)
+                var maxIterations = Math.Abs(differenceY) + 1;
+
+                for (int i = 0; i < maxIterations; i++)
                 {
-                    yield return new Point(From.X, pointWithGreaterY.Y - difference);
-                    difference--;
+                    yield return new Point(From.X, From.Y + i * signFactor);
+                }
+            }
+            else if(IsDiagonally) // To and From are on a 45° line
+            {
+                var differenceX = To.X - From.X;
+                var signFactorX = differenceX < 0 ? -1 : 1;
+
+                var differenceY = To.Y - From.Y;
+                var signFactorY = differenceY < 0 ? -1 : 1;
+
+                var maxIterations = Math.Abs(differenceX) + 1;
+
+                for (int i = 0; i < maxIterations; i++)
+                {
+                    yield return new Point(From.X + i * signFactorX, From.Y + i * signFactorY);
                 }
             }
 

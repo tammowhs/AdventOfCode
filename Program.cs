@@ -1,6 +1,7 @@
 ﻿using AdventOfCode._02Dive;
 using AdventOfCode._03BinaryDiagnostic;
 using AdventOfCode._04GiantSquid;
+using AdventOfCode._05HydrothermalVenture;
 using System;
 
 namespace AdventOfCode
@@ -9,9 +10,9 @@ namespace AdventOfCode
 	{
 		static void Main(string[] args)
 		{
-			var input = @"";
+			var input = "";
 
-			ICodePuzzle level = new GiantSquid();
+			ICodePuzzle level = new HydrothermalVenture();
 
             var solution1 = level.EvaluatePartOne(input);
 
