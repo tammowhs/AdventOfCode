@@ -1,5 +1,6 @@
 ﻿using AdventOfCode._02Dive;
 using AdventOfCode._03BinaryDiagnostic;
+using AdventOfCode._04GiantSquid;
 using System;
 
 namespace AdventOfCode
@@ -10,15 +11,15 @@ namespace AdventOfCode
 		{
 			var input = "";
 
-			ICodePuzzle level = new BinaryDiagnostic();
+			ICodePuzzle level = new GiantSquid();
 
             var solution1 = level.EvaluatePartOne(input);
 
             Console.WriteLine(solution1);
 
-            var solution2 = level.EvaluatePartTwo(input);
+   //         var solution2 = level.EvaluatePartTwo(input);
 
-			Console.WriteLine(solution2);
+			//Console.WriteLine(solution2);
 		}
 	}
 }
