@@ -2,6 +2,7 @@
 using AdventOfCode._03BinaryDiagnostic;
 using AdventOfCode._04GiantSquid;
 using AdventOfCode._05HydrothermalVenture;
+using AdventOfCode._06Lanternfish;
 using System;
 
 namespace AdventOfCode
@@ -10,17 +11,17 @@ namespace AdventOfCode
 	{
 		static void Main(string[] args)
 		{
-			var input = "";
+			var input = @"2,1,1,1,1,1,1,5,1,1,1,1,5,1,1,3,5,1,1,3,1,1,3,1,4,4,4,5,1,1,1,3,1,3,1,1,2,2,1,1,1,5,1,1,1,5,2,5,1,1,2,1,3,3,5,1,1,4,1,1,3,1,1,1,1,1,1,1,1,1,1,1,1,4,1,5,1,2,1,1,1,1,5,1,1,1,1,1,5,1,1,1,4,5,1,1,3,4,1,1,1,3,5,1,1,1,2,1,1,4,1,4,1,2,1,1,2,1,5,1,1,1,5,1,2,2,1,1,1,5,1,2,3,1,1,1,5,3,2,1,1,3,1,1,3,1,3,1,1,1,5,1,1,1,1,1,1,1,3,1,1,1,1,3,1,1,4,1,1,3,2,1,2,1,1,2,2,1,2,1,1,1,4,1,2,4,1,1,4,4,1,1,1,1,1,4,1,1,1,2,1,1,2,1,5,1,1,1,1,1,5,1,3,1,1,2,3,4,4,1,1,1,3,2,4,4,1,1,3,5,1,1,1,1,4,1,1,1,1,1,5,3,1,5,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,5,1,1,1,1,1,1,1,1,5,1,4,4,1,1,1,1,1,1,1,1,3,1,3,1,4,1,1,2,2,2,1,1,2,1,1";
 
-			ICodePuzzle level = new HydrothermalVenture();
+			ICodePuzzle level = new Lanternfish();
 
-            var solution1 = level.EvaluatePartOne(input);
+            var solution1 = level.EvaluatePartTwo(input);
 
             Console.WriteLine(solution1);
 
-            var solution2 = level.EvaluatePartTwo(input);
+            //var solution2 = level.EvaluatePartTwo(input);
 
-            Console.WriteLine(solution2);
+            //Console.WriteLine(solution2);
         }
 	}
 }
