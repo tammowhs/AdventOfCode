@@ -2,6 +2,8 @@
 {
 	public interface ICodePuzzle
 	{
-		int Evaluate(string input);
+		int EvaluatePartOne(string input);
+
+		int EvaluatePartTwo(string input);
 	}
 }

@@ -6,8 +6,19 @@ namespace AdventOfCode._02Dive
 {
 	public class Dive : ICodePuzzle
 	{
-		public int Evaluate(string input)
+		public int EvaluatePartOne(string input)
 		{
+			var instructions = input.Split("\r\n")
+				.Select(inst => inst.Split(" "))
+				.Select(inst => new Instruction(inst[0], int.Parse(inst[1]))).ToList();
+
+			var product = GetPartOneProduct(instructions);
+
+			return product;
+		}
+
+        public int EvaluatePartTwo(string input)
+        {
 			var instructions = input.Split("\r\n")
 				.Select(inst => inst.Split(" "))
 				.Select(inst => new Instruction(inst[0], int.Parse(inst[1]))).ToList();
@@ -17,7 +28,7 @@ namespace AdventOfCode._02Dive
 			return product;
 		}
 
-		private int GetPartOneProduct(List<Instruction> instructions)
+        private int GetPartOneProduct(List<Instruction> instructions)
 		{
 			var position = 0;
 			var depth = 0;

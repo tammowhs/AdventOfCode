@@ -5,7 +5,16 @@ namespace AdventOfCode._01SonarSweep
 {
 	public class SonarSweep : ICodePuzzle
 	{
-		public int Evaluate(string input)
+		public int EvaluatePartOne(string input)
+		{
+			var depths = input.Split("\r\n").Select(depthAsString => int.Parse(depthAsString)).ToList();
+
+			var countIncreases = CountIncreases(depths);
+
+			return countIncreases;
+		}
+
+		public int EvaluatePartTwo(string input)
 		{
 			var depths = input.Split("\r\n").Select(depthAsString => int.Parse(depthAsString)).ToList();
 
