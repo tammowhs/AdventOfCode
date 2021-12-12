@@ -9,7 +9,7 @@ namespace AdventOfCode
 	{
 		static void Main(string[] args)
 		{
-			var input = "";
+			var input = @"";
 
 			ICodePuzzle level = new GiantSquid();
 
@@ -17,9 +17,9 @@ namespace AdventOfCode
 
             Console.WriteLine(solution1);
 
-   //         var solution2 = level.EvaluatePartTwo(input);
+            var solution2 = level.EvaluatePartTwo(input);
 
-			//Console.WriteLine(solution2);
-		}
+            Console.WriteLine(solution2);
+        }
 	}
 }
