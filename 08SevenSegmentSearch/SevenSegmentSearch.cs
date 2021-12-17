@@ -21,7 +21,7 @@ gcafb gcf dcaebfg ecagb gf abcdeg gaef cafbge fdbac fegbdc | fgae cfgab fg bagce
 
 		public int EvaluatePartOne(string input)
 		{
-			input = testInput;
+			//input = testInput;
 
 			var displays = input.Split("\r\n").Select(d => new Display(d)).ToList();
 
@@ -34,7 +34,7 @@ gcafb gcf dcaebfg ecagb gf abcdeg gaef cafbge fdbac fegbdc | fgae cfgab fg bagce
 
 		public int EvaluatePartTwo(string input)
 		{
-			input = testInput;
+			//input = testInput;
 
 			var displays = input.Split("\r\n").Select(d => new Display(d)).ToList();
 
