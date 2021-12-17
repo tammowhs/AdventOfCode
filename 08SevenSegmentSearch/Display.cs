@@ -42,19 +42,36 @@ namespace AdventOfCode._08SevenSegmentSearch
 				var signalWithValueToCompare = solvedValuesEnumerator.Current;
 
 				if(signalWithValueToCompare is null)
-                {
+				{
 					solvedValuesEnumerator = solvedValues.GetEnumerator();
 					continue;
-                }
+				}
 
 				var containingDigits = DigitsThatContainsValue(signalWithValueToCompare.Value.Value);
 
 				var inverseContainingDigits = Enumerable.Range(0,10).Except(containingDigits).ToList();
 
 				foreach (var signal in AllSignals.Where(s => !s.Value.HasValue))
-                {
+				{
+					// Annahme:
+					// 1.) man hat ein Signal 'abcde' von dem man weiß, dass es 2, 3 oder 5 repräsentiert. 
+					// 2.) man weiß, dass in der Sieben Segment Notation 1 in den Ziffern 0,1,3,4,7,8,9 "enthalten" ist.
+					// 3a.) man weiß, dass 1 dem Signal 'ag' entspricht.
+					//		'ag' ist nicht in 'abcde' enthalten, das heißt die möglichen Werte sind 2,3,5 ohne 0,1,3,4,7,8,9
+					//		ergo sind die möglichen Werte 2,5
+					// 3a.) man weiß, dass 1 dem Signal 'ab' entspricht.
+					//		'ab' ist in 'abcde' enthalten, das heißt die möglichen Werte sind 2,3,5 ohne das invertierte von (0,1,3,4,7,8,9)
+					//		ergo 2,3,5 ohne 2,5,6
+					//		ergo sind die möglichen Werte 3
+
+					// Wenn ein noch unbekanntes (noch mehrere Werte möglich) Signal mit einem bekannten Signal verglichen wird,
+					// und alle Segmente des Bekannten Teil der Segmente des Unbekannten ist, so kann man die möglichen Werte des Unbekannten so weiter einschränken,
+					// sodass diese Werte nur von dem Bekannten ableitbaren Signalen entspricht. // alle anderen rausschmeißen, hier else Fall
+					// Wenn die Segmente des Bekannten nicht vollständig in den Segmenten des Unbekannten ist, kann man die möglichen Werte des Unbekannten so weiter einschränken,
+					// sodass diese Werte keine von dem Bekannten ableitbaren Signalen entspricht. // hier if Fall
+					// Ableitbare Signale von X bedeutet alle Signale deren Segmente die Segmente von X vollständig enthalten. // switch-expression unten
 					if (!signalWithValueToCompare.Segments.IsSubSetOf(signal.Segments))
-                    {
+					{
 						signal.PossibleValues.RemoveAll(pV => containingDigits.Contains(pV));
 					}
 					else
@@ -63,21 +80,21 @@ namespace AdventOfCode._08SevenSegmentSearch
 					}
 
 					if (signalWithValueToCompare.Value.Value == 6 && signal.PossibleValues.SequenceEqual(new int[] { 2, 5 }))
-                    {
-                        if (signal.Segments.IsSubSetOf(signalWithValueToCompare.Segments))
-                        {
+					{
+						if (signal.Segments.IsSubSetOf(signalWithValueToCompare.Segments))
+						{
 							signal.PossibleValues.Clear();
 							signal.PossibleValues.Add(5);
-                        }
-                        else
-                        {
+						}
+						else
+						{
 							signal.PossibleValues.Clear();
 							signal.PossibleValues.Add(2);
 						}
-                    }
+					}
 
 					if(signal.Value.HasValue)
-                    {
+					{
 						var signalValue = signal.Value.Value;
 
 						var allSignalsWithSameSignalString = AllSignals.Where(s => s.OrderedSignal == signal.OrderedSignal).ToList();
@@ -88,15 +105,15 @@ namespace AdventOfCode._08SevenSegmentSearch
 								s.PossibleValues.Add(signalValue);
 							});
 					}
-                }
+				}
 			}
 
 			int pin = 0;
-            foreach (var signal in outputSignals)
-            {
+			foreach (var signal in outputSignals)
+			{
 				pin *= 10;
 				pin += signal.Value.Value;
-            }
+			}
 
 			return pin;
 		}
