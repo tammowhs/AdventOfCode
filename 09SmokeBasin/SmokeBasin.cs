@@ -33,38 +33,41 @@ namespace AdventOfCode._09SmokeBasin
 
         public int EvaluatePartTwo(string input)
         {
-            input = testInput;
+            input = testinput;
 
             var points = DeserializeInputString(input).ToArray();
 
             var allLowest = MarkAndFindAllLowest(points).ToList();
 
-            foreach (var lowest in allLowest)
-            {
-                var basin = FindBasinForPoint(points, lowest);
-            }
+            var basins = allLowest.Select(lowest => FindBasinForPoint(points, lowest));
 
-            var basins = allLowest.Select(lowest => FindBasinForPoint(points, lowest)).ToList();
+            var largestBasins = basins
+                                    .Select(basin => basin.Count())
+                                    .OrderByDescending(count => count)
+                                    .Take(3);
 
-            var largestBasins = basins.OrderBy(basin => basin.Count).Select(basin => basin.Count).Take(3).ToList();
+            var productOfLargestBasins = largestBasins.Aggregate(1, (acc, value) => acc * value);
 
-
-
-            return 0;
+            return productOfLargestBasins;
         }
 
-        private List<Point> FindBasinForPoint(Point[] points, Point point)
+        private IEnumerable<Point> FindBasinForPoint(Point[] points, Point point)
         {
-            var adjacents = FindAdjacents(points, point);
-            var oneUpAdjacents = adjacents.Where(aP => aP.Height == point.Height + 1).ToList();
+            var adjacents = FindAdjacents(points, point).ToList();
+            // var oneUpAdjacents = adjacents.Where(aP => aP.Height == point.Height + 1);
+            // basins dont need to be continuous, so a.e. 0 can come from 1, but also from 2 3 4 5 6 7 8
+            var oneUpAdjacents = adjacents.Where(aP => aP.Height > point.Height && aP.Height != 9);
 
             if (point.Height == 8 || !oneUpAdjacents.Any())
                 return new List<Point> { point };
 
-            var adjacentsOfAdjacents = oneUpAdjacents.Select(oUAP => FindBasinForPoint(points, oUAP)).ToList();
+            var adjacentsOfAdjacents = oneUpAdjacents.Select(oUAP => FindBasinForPoint(points, oUAP));
 
-            // hier muss noch ein distinct by X und Y gemacht werden
-            var all = adjacentsOfAdjacents.SelectMany(aOA => aOA).Concat(new List<Point> { point }).ToList();
+            var all = adjacentsOfAdjacents
+                        .SelectMany(aOA => aOA)
+                        .Concat(new List<Point> { point })
+                        .GroupBy(p => new { p.X, p.Y })
+                        .Select(group => group.First());
 
             return all;
         }
