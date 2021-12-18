@@ -33,7 +33,7 @@ namespace AdventOfCode._09SmokeBasin
 
         public int EvaluatePartTwo(string input)
         {
-            input = testinput;
+            input = testInput;
 
             var points = DeserializeInputString(input).ToArray();
 
