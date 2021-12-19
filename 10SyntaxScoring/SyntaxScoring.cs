@@ -45,15 +45,15 @@ namespace AdventOfCode._10SyntaxScoring
 		{
             input = testInput;
 
-            var lines = input.Split("\r\n").Select(value => new Line(value)).ToList();
+			var lines = input.Split("\r\n").Select(value => new Line(value));
 
-			var allUncorrupted = lines.Where(l => !l.CorruptingSymbol.HasValue).ToList();
+			var allUncorrupted = lines.Where(l => !l.CorruptingSymbol.HasValue);
 
 			var rating = allUncorrupted
 				.Select(line =>
 					line.SymbolsToCompleteSequence
 						.Select(completingSymbol => RateSymbolPartTwo(completingSymbol))
-						.Aggregate(0, (agg, next) => agg * 5 + next)
+						.Aggregate((long)0, (agg, next) => agg * 5 + next)
 				)
 				.OrderBy(r => r)
 				.ToList();
