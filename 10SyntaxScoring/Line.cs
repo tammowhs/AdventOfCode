@@ -8,15 +8,18 @@ namespace AdventOfCode._10SyntaxScoring
 {
     public class Line
     {
+        private static readonly Symbol[] openingSymbols = { Symbol.RoundOpen, Symbol.SquareOpen, Symbol.CurlyOpen, Symbol.AngleOpen };
+
         private readonly string value;
         private readonly Symbol[] symbols;
         private readonly Symbol? corruptingSymbol;
-
-        private static readonly Symbol[] openingSymbols = { Symbol.RoundOpen, Symbol.SquareOpen, Symbol.CurlyOpen, Symbol.AngleOpen };
+        private readonly List<Symbol> lastOccuringOpeningSymbols = new List<Symbol>();
 
         public string Value => value;
         public Symbol[] Symbols => symbols;
         public Symbol? CorruptingSymbol => corruptingSymbol;
+        public List<Symbol> LastOccuringOpeningSymbols => lastOccuringOpeningSymbols;
+        public List<Symbol> SymbolsToCompleteSequence => Enumerable.Reverse(lastOccuringOpeningSymbols).Select(openSymbol => MapOpenSymbolToCloseSymbol(openSymbol)).ToList();
 
         public Line(string value)
         {
@@ -27,8 +30,6 @@ namespace AdventOfCode._10SyntaxScoring
 
         public Symbol? Evaluate()
         {
-            var lastOccuringOpeningSymbols = new List<Symbol>();
-
             //var balanceRound = 0;
             //var balanceSquare = 0;
             //var balanceCurly = 0;
@@ -107,6 +108,15 @@ namespace AdventOfCode._10SyntaxScoring
             '}' => Symbol.CurlyClose,
             '<' => Symbol.AngleOpen,
             '>' => Symbol.AngleClose,
+            _ => throw new ArgumentException()
+        };
+
+        private Symbol MapOpenSymbolToCloseSymbol(Symbol open) => open switch
+        {
+            Symbol.RoundOpen => Symbol.RoundClose,
+            Symbol.SquareOpen => Symbol.SquareClose,
+            Symbol.CurlyOpen => Symbol.CurlyClose,
+            Symbol.AngleOpen => Symbol.AngleClose,
             _ => throw new ArgumentException()
         };
     }
