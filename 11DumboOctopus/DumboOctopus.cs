@@ -68,8 +68,6 @@ namespace AdventOfCode._11DumboOctopus
 
 		private int flashes = 0;
 
-        public int Flashes { get => flashes; }
-
         private List<Point> DoStep(List<Point> initalStepPoints)
 		{
 			initalStepPoints.ForEach(p => p.EnergyLevel++);
